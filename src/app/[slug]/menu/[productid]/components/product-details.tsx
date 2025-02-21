@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatCurrency } from "@/helpers/format-currency";
 
 interface ProductDetailsProps {
@@ -38,8 +39,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   };
 
   return (
-    <div className="flex flex-col relative z-50 mt-[-1.5rem] rounded-t-3xl p-5 flex-auto">
-       <div className="flex-auto">
+    <div className="flex flex-col relative overflow-hidden z-50 mt-[-1.5rem] rounded-t-3xl p-5 flex-auto">
+       <div className="flex-auto overflow-hidden">
          {/* RESTAURANTE */}
         <div className="flex items-center gap-1.5">
           <Image 
@@ -58,7 +59,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         <h2 className="mt-1 text-xl font-semibold">{product.name}</h2>
 
         {/* PREÇO E QUANTIDADE */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-3">
          <h3 className="text-xl font-semibold">
            {formatCurrency(product.price)}
          </h3>
@@ -73,7 +74,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
          </div>
         </div>
 
-        {/* SOBRE */}
+       <ScrollArea className="h-full">
+         {/* SOBRE */}
         <div className="mt-6 space-y-3">
           <h4 className="font-semibold">Sobre</h4>
           <p className="text-sm text-muted-foreground">{product.description}</p>
@@ -85,11 +87,16 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             <ChefHatIcon size={18}/>
             <h4 className="font-semibold">Ingredientes</h4>
           </div>
-          <p className="text-sm text-muted-foreground">{product.ingredients}</p>
+          <ul className="list-disc px-5 text-sm text-muted-foreground">
+            {product.ingredients.map((ingredient) => (
+              <li key={ingredient}>{ingredient}</li>
+            ))}
+          </ul>           
         </div>
+       </ScrollArea>
       </div>
         
-        <Button className="mt-6 w-full rounded-full">Adicionar à sacola</Button>
+        <Button className=" w-full rounded-full">Adicionar à sacola</Button>
     </div>
   );
 }
