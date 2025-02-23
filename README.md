@@ -14,8 +14,11 @@ pnpm dev
 bun dev
 ```
 
+iniciar o banco
+npx prisma generate
+
 run seed:
-npx prisna db seed
+npx prisma db seed
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
