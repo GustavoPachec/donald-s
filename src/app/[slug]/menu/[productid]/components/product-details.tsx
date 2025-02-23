@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatCurrency } from "@/helpers/format-currency";
 
-import CartSheet from "../../components/cat-sheet";
+import CartSheet from "../../components/cart-sheet";
 import { CartContext } from "../../context/cart";
 
 interface ProductDetailsProps {
@@ -26,7 +26,7 @@ interface ProductDetailsProps {
 }
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
-  const { toggleCart } = useContext(CartContext);
+  const { toggleCart, addProduct } = useContext(CartContext);
   const [quantity, setQuantity] = useState<number>(0);
 
   const handleDecreaseQuantity = () => {
@@ -43,6 +43,10 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   };
 
   const handleAddToCart = () => {
+    addProduct({
+      ...product,
+      quantity,
+    })
     toggleCart();
   };
 
