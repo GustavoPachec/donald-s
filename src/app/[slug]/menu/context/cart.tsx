@@ -30,7 +30,28 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const addProduct = (product: CartProduct) => {
-    setProducts((prev) => [...prev, product]);
+    // Verificar se o produto já está no carrinho
+    // se estiver, aumente a sua quantidade
+    // se não estiver, adicione
+    const productIsAlreadyOnTheCart = products.some(
+      (prevProduct) => prevProduct.id === product.id,
+    );
+
+    if(!productIsAlreadyOnTheCart) {
+      return setProducts((prev) => [...prev, product]);
+    }
+    
+    setProducts((prevProducts) => {
+      return prevProducts.map((prevProducts) => {
+        if(prevProducts.id === product.id) {
+          return {
+            ...prevProducts,
+            quantity: prevProducts.quantity + product.quantity
+          }
+        }
+        return prevProducts
+      })
+    })
   }
 
   return (
